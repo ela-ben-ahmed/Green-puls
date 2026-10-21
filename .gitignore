@@ -51,5 +51,15 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# secrets 
+.env
+*.tmp
+# build
+ecocampus
+*.exe
+*.o
+.vscode/
+.venv/
+
 # debug information files
 *.dwo
