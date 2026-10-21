@@ -1,1 +1,10 @@
-
+id,batiment,ressource,valeur,seuil,date,heure
+1,Bibliotheque,electricite,152.4,120.0,2026-09-20,14:00
+2,Administration,eau,,60.0,2026-09-20,14:15
+3,Residence,gaz,310.0,280.0,2026-09-20,14:30
+4,Salles de cours,electricite,abc,90.0,2026-09-20,14:45
+5,Laboratoire,eau,38.0,60.0,2026-13-45,15:00
+1,Laboratoire,eau,38.0,60.0,2026-09-20,15:00
+6,Laboratoire,eau
+7,Laboratoire,eau,40.0,60.0,2026-09-20,25:00
+8,Laboratoire,eau,40.0,60.0,2026-09-20,15:10
