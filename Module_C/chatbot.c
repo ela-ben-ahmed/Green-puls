@@ -1,10 +1,5 @@
-/* chatbot.c - Assistant IA EcoCampus : appelle l'API Groq (modele openai/gpt-oss-120b, comme le
-   projet Python d'origine) avec la commande curl, fournie avec Windows 10/11, Linux et macOS.
-   Configuration (variable d'environnement OU fichier .env) :
-     GROQ_API_KEY        cle API (ne JAMAIS la mettre dans le code ni sur GitHub)
-     ECOCAMPUS_MODEL     modele (defaut : openai/gpt-oss-120b)
-     ECOCAMPUS_API_URL   adresse de l'API (defaut : https://api.groq.com/openai/v1/chat/completions) */
-#define _POSIX_C_SOURCE 200809L
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,9 +17,9 @@
 
 #define FIC_REQ "ecocampus_req.tmp"
 #define FIC_CFG "ecocampus_cfg.tmp"
-#define MAX_HIST 12                      /* messages gardes en memoire (6 echanges) */
+#define MAX_HIST 12                      
 
-/* ---------- tampon de texte dynamique ---------- */
+
 typedef struct { char *s; size_t len, cap; } Buf;
 
 static int buf_add(Buf *b, const char *t) {
@@ -40,7 +35,7 @@ static int buf_add(Buf *b, const char *t) {
     b->len += l;
     return 1;
 }
-/* ajoute t en l'echappant pour JSON */
+
 static int buf_add_json(Buf *b, const char *t) {
     char tmp[8];
     for (; *t; t++) {
@@ -56,7 +51,7 @@ static int buf_add_json(Buf *b, const char *t) {
     return 1;
 }
 
-/* ---------- historique de conversation ---------- */
+
 static struct { char role[10]; char *texte; } hist[MAX_HIST];
 static int nb_hist = 0;
 
@@ -78,7 +73,7 @@ static void hist_retirer_dernier(void) {
     if (nb_hist > 0) { free(hist[--nb_hist].texte); }
 }
 
-/* ---------- contexte donne a l'IA ---------- */
+
 static int construire_contexte(Buf *b, const Mesure *tab, int n) {
     char l[256];
     if (!buf_add(b, "Tu es l'assistant du projet EcoCampus, un outil de suivi de la consommation "
@@ -104,7 +99,7 @@ static int construire_contexte(Buf *b, const Mesure *tab, int n) {
     return 1;
 }
 
-/* ---------- cle API : variable d'environnement, sinon fichier .env ---------- */
+
 static const char *lire_cle(char *buf, size_t taille) {
     const char *e = getenv("GROQ_API_KEY");
     if (e && *e) return e;
@@ -130,8 +125,7 @@ static const char *lire_cle(char *buf, size_t taille) {
     return NULL;
 }
 
-/* ---------- lecture de la reponse JSON ---------- */
-/* extrait la valeur texte de la cle "cle" ; retourne 1 si trouvee */
+
 static int extraire_texte(const char *json, const char *cle, char *out, size_t taille) {
     char motif[40]; snprintf(motif, sizeof motif, "\"%s\"", cle);
     const char *p = strstr(json, motif);
@@ -172,8 +166,7 @@ static int extraire_texte(const char *json, const char *cle, char *out, size_t t
     return 1;
 }
 
-/* ---------- appel de l'API Groq (format compatible OpenAI) ---------- */
-/* retourne 1 si ok (rep rempli), 0 sinon (rep contient la raison) */
+
 static int appeler_ia(const Mesure *tab, int n, char *rep, size_t taille) {
     char cle_buf[256];
     const char *cle = lire_cle(cle_buf, sizeof cle_buf);
@@ -226,7 +219,7 @@ static int appeler_ia(const Mesure *tab, int n, char *rep, size_t taille) {
     return res;
 }
 
-/* ---------- reponse locale de secours (sans IA) ---------- */
+
 static int contient(const char *txt, const char *mot) {
     size_t lm = strlen(mot);
     for (; *txt; txt++) {
