@@ -8,7 +8,7 @@
 | analyse.c | tri, statistiques, anomalies, export JSON |
 | chatbot.h / chatbot.c | assistant IA (API Groq) qui répond sur les données du campus |
 | main.c | menu interactif (option 11 = chatbot) et mode automatique |
-| measures_in.csv / measures_erreurs.csv | | jeux de données |
+| measures_in.csv / measures_erreurs.csv  | jeux de données |
 
 ## Compilation (GCC, C99)
     gcc -std=c99 -Wall -Wextra -o ecocampus main.c gestion.c analyse.c chatbot.c
